@@ -83,6 +83,8 @@ c:\users\sasha\documents\visual studio 2015\Projects\LabsDP\Lab1\Lab1\bin\ru\Mic
 c:\users\sasha\documents\visual studio 2015\Projects\LabsDP\Lab1\Lab1\bin\ru\Microsoft.Owin.Security.Google.resources.dll
 c:\users\sasha\documents\visual studio 2015\Projects\LabsDP\Lab1\Lab1\bin\ru\Microsoft.Owin.Security.Twitter.resources.dll
 c:\users\sasha\documents\visual studio 2015\Projects\LabsDP\Lab1\Lab1\bin\ru\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
-c:\users\sasha\documents\visual studio 2015\Projects\LabsDP\Lab1\Lab1\obj\Debug\Lab1.csprojResolveAssemblyReference.cache
 c:\users\sasha\documents\visual studio 2015\Projects\LabsDP\Lab1\Lab1\obj\Debug\Lab1.dll
 c:\users\sasha\documents\visual studio 2015\Projects\LabsDP\Lab1\Lab1\obj\Debug\Lab1.pdb
+C:\Users\sasha\Documents\Visual Studio 2015\Projects\LabsDP\Lab1\Lab1\obj\Debug\Lab1.csprojAssemblyReference.cache
+C:\Users\sasha\Documents\Visual Studio 2015\Projects\LabsDP\Lab1\Lab1\obj\Debug\Lab1.csproj.CoreCompileInputs.cache
+C:\Users\sasha\Documents\Visual Studio 2015\Projects\LabsDP\Lab1\Lab1\obj\Debug\Lab1.csproj.CopyComplete

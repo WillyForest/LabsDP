@@ -17,14 +17,16 @@ namespace Lab1.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private int _secretValue = 25;
+		private static int _captcha = 0;
 
         public AccountController()
-        {
+        {									
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
-        {
-            UserManager = userManager;
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+		{								   
+			UserManager = userManager;
             SignInManager = signInManager;
         }
 
@@ -58,6 +60,9 @@ namespace Lab1.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            Random random = new Random();
+			_captcha = random.Next(0, 10);
+			ViewBag.Captcha = _captcha;
             return View();
         }
 
@@ -68,6 +73,11 @@ namespace Lab1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+			if (model.Captcha != _captcha * _secretValue)
+			{
+				ModelState.AddModelError("", "Неверная капча.");
+				return View(model);
+			}
             if (!ModelState.IsValid)
             {
                 return View(model);

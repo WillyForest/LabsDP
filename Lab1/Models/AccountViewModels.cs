@@ -60,6 +60,10 @@ namespace Lab1.Models
 
         [Display(Name = "Запомнить меня")]
         public bool RememberMe { get; set; }
+
+		[Required]
+		[Display(Name = "Капча")]
+		public int Captcha { get; set; }
     }
 
     public class RegisterViewModel
