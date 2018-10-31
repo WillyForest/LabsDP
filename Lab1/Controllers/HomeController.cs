@@ -53,13 +53,16 @@ namespace Lab1.Controllers
 				{
 					ViewBag.Message = "Your role is admin";
 					model.IsAdmin = true;
-					DirectoryInfo d = new DirectoryInfo(@"C:\Test");//Assuming Test is your Folder
+					DirectoryInfo d = new DirectoryInfo(@"D:\Test");//Assuming Test is your Folder
 					FileInfo[] Files = d.GetFiles("*.txt"); //Getting Text files
 					model.Files = Files;
 				}
 				else
 				{
 					model.IsAdmin = false;
+					DirectoryInfo d = new DirectoryInfo(@"D:\Test");//Assuming Test is your Folder
+					FileInfo[] Files = d.GetFiles("*.txt"); //Getting Text files
+					model.Files = Files;
 					ViewBag.Message = "Your role is not admin";
 				}
 			}
@@ -79,9 +82,11 @@ namespace Lab1.Controllers
 
 		public ActionResult Logs()
 		{
-			List<Log> model = new List<Log>();
-			model = logger.GetAllLogs();
-			return View(model);
+			if (UserManager.IsInRoleAsync(Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity), "Admin").Result)
+			{
+				return View(logger.GetAllLogs());
+			}
+			return RedirectToAction("Index");
 		}
 
         public ActionResult Contact()
@@ -93,7 +98,7 @@ namespace Lab1.Controllers
 
 		public ActionResult DeleteFile(string file)
 		{
-			System.IO.File.Delete(file);
+			System.IO.File.Delete(file);					   
 			return RedirectToAction("Index");
 		} 
 

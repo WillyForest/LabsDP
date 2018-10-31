@@ -9,20 +9,23 @@
 @if (Model.IsAuthenticated)
 {
 <div class="row">
-	<h2>Файлы в папке C:/Test</h2>
+	<h2>Файлы в папке D:/Test</h2>
 	<ul>
-		@if (Model.IsAdmin)
+		@if (Model.Files != null)
 		{
-			foreach (var file in Model.Files)
+			if (Model.IsAdmin)
 			{
+				foreach (var file in Model.Files)
+				{
 				<li><a href="/home/openfile?file=@file.FullName">@file.Name -- @file.LastAccessTime</a> -- <a href="/home/deletefile?file=@file.FullName">Удалить</a></li>
+				}
 			}
-		}
-		else
-		{
-			foreach (var file in Model.Files)
+			else
 			{
+				foreach (var file in Model.Files)
+				{
 				<li><a href="/home/openfile?file=@file.FullName">@file.Name -- @file.LastAccessTime</a></li>
+				}
 			}
 		}
 	</ul>
