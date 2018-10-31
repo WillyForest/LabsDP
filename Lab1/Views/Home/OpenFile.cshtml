@@ -1,0 +1,27 @@
+﻿
+@{
+	Layout = null;
+}
+@model List<string>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OpenFile</title>
+</head>
+<body>
+	<div>
+		<h3>Содержимое файла @ViewBag.File</h3>
+		<a href="/">Назад</a>
+		@foreach (var str in Model)
+		{
+			<p>@str</p>
+		}
+		@if ((bool)ViewBag.IsAdmin == true) 
+		{ 
+			<a href="/home/deletefile?file=@ViewBag.File">Удалить</a>
+		}
+	</div>
+</body>
+</html>

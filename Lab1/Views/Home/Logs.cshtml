@@ -1,0 +1,27 @@
+﻿
+@{
+    Layout = null;
+}
+@using Lab1.Models;
+@model List<Log>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Logs</title>
+</head>
+<body>
+    <div> 
+		<ul>
+		@if (Model.Count > 0)
+		{
+			foreach (var log in Model)
+			{
+				<li>@log.Created : @log.Activity</li>	
+			}
+		}
+		</ul>
+    </div>
+</body>
+</html>

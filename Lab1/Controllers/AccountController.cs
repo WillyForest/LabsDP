@@ -15,7 +15,8 @@ namespace Lab1.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationSignInManager _signInManager;
+		Logger.Logger logger = new Logger.Logger();
+		private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private int _secretValue = 25;
 		private static int _captcha = 0;
@@ -75,12 +76,14 @@ namespace Lab1.Controllers
         {
 			if (model.Captcha != _captcha * _secretValue)
 			{
+				logger.WriteLog("Неудачная попытка входа. Неверная капча.");
 				ModelState.AddModelError("", "Неверная капча.");
 				return View(model);
 			}
             if (!ModelState.IsValid)
             {
-                return View(model);
+				logger.WriteLog("Неудачная попытка входа.");
+				return View(model);
             }
 
             // Сбои при входе не приводят к блокированию учетной записи
@@ -89,14 +92,16 @@ namespace Lab1.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+					logger.WriteLog("Удачный вход. Пользователь: " + model.Email);
+					return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Неудачная попытка входа.");
+					logger.WriteLog("Неудачная попытка входа. Неверный логин или пароль.");
+					ModelState.AddModelError("", "Неудачная попытка входа.");
                     return View(model);
             }
         }
