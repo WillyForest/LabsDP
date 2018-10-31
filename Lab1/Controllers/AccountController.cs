@@ -100,6 +100,9 @@ namespace Lab1.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
+					Random random = new Random();
+					_captcha = random.Next(0, 10);
+					ViewBag.Captcha = _captcha;
 					logger.WriteLog("Неудачная попытка входа. Неверный логин или пароль.");
 					ModelState.AddModelError("", "Неудачная попытка входа.");
                     return View(model);
@@ -169,8 +172,9 @@ namespace Lab1.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+				{
+					logger.WriteLog("Успешная регистрация пользователя " + model.Email);
+					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // Дополнительные сведения о том, как включить подтверждение учетной записи и сброс пароля, см. по адресу: http://go.microsoft.com/fwlink/?LinkID=320771
                     // Отправка сообщения электронной почты с этой ссылкой
@@ -179,10 +183,10 @@ namespace Lab1.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
 
                     return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-            }
-
+				}
+				AddErrors(result);
+				logger.WriteLog("Регистрация не успешна. " + Newtonsoft.Json.JsonConvert.SerializeObject(result.Errors));
+			}
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
             return View(model);
         }
@@ -406,6 +410,7 @@ namespace Lab1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+			logger.WriteLog("Пользователь вышел из аккаунта " + User.Identity.Name);	
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }

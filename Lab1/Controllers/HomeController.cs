@@ -98,12 +98,14 @@ namespace Lab1.Controllers
 
 		public ActionResult DeleteFile(string file)
 		{
-			System.IO.File.Delete(file);					   
+			System.IO.File.Delete(file);
+			logger.WriteLog("Пользователь " + User.Identity.Name + " удалил файл " + file + ".");					   
 			return RedirectToAction("Index");
 		} 
 
 		public ActionResult OpenFile(string file)
 		{
+			logger.WriteLog("Пользователь " + User.Identity.Name + " просматривает файл " + file + ".");
 			ViewBag.File = file;
 			ViewBag.IsAdmin = UserManager.IsInRoleAsync(Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity), "Admin").Result;
 			List<string> fileStrs = new List<string>();
